@@ -1,0 +1,6 @@
+I went through several bootcamps on Boot.dev which was made by some of my favorite developers that I learned a lot from on YouTube:
+
+	1. Object Oriented Programming 
+	2. Learn Data Structures and Algorithms in Python
+	3. Learn Functional Programming in Python
+	4. Learn Data Structures and Algorithms in Python 2
