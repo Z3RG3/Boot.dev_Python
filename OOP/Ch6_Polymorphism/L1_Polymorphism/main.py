@@ -6,6 +6,10 @@ function or object to take on multiple forms.
 !    poly" = "many"
 !   "morph" = "form"
 
+
+* Polymorphism in programming is the ability to present the same interface (function or method signatures) for many different underlying forms (data types).
+
+
 For example, classes in the same hierarchical tree may have methods with the same name and signature but different implementations.
  Here's a simple example:"""
 
