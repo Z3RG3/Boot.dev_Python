@@ -52,6 +52,7 @@ def my_map_withLambda( arg_list):
 "Map", "filter", and "reduce" are three commonly used higher-order functions in functional programming.
 
 In Python, the built-in map function takes a function and an iterable (in this case a list) as inputs. It returns an iterator that applies the function to every item, yielding the results.
+![Map function](mapFunc.png)
 
 **map** function
 : **With map, we can operate on lists without using loops and nasty stateful variables.** For example:
@@ -116,7 +117,7 @@ def convert_line(line):
 
 **The built-in filter function takes a function and an iterable (in this case a list) and returns an iterator that only contains elements from the original iterable where the result of the function on that item returned True.**
 
-![Filter function](FfVxD7d.png)
+![Filter function](filterFunc.png)
 
 In Python:
 ```
@@ -178,8 +179,9 @@ lines = s.split("\n")
 # ['hello', 'world']
 ```
 
-## SOLUTION:
-'''
+### SOLUTION:
+```
+
    def remove_invalid_lines(document):
         return "\n".join(
             filter(lambda x: not x.startswith("-"), document.split("\n"))
@@ -195,42 +197,115 @@ run_cases = [
         "\n* In a world of pure imagination\n* Living there - you'll be free\n",
     ),
 ]
-'''
----------------------------------
-Input document:
-"
-* We are the music makers
-- And we are the dreamers of dreams
-* Come with me and you'll be
-"
-Expected output:
-"
-* We are the music makers
-* Come with me and you'll be
-"
-Actual output:
-"
-* We are the music makers
-* Come with me and you'll be
-"
-Pass
----------------------------------
-Input document:
-"
-* In a world of pure imagination
-- There is no life I know
-* Living there - you'll be free
-"
-Expected output:
-"
-* In a world of pure imagination
-* Living there - you'll be free
-"
-Actual output:
-"
-* In a world of pure imagination
-* Living there - you'll be free
-"
-Pass
-============= PASS ==============
-2 passed, 0 failed, 1 skipped
+```
+
+## Reduce
+
+The built-in functools.reduce() function takes a function and a list of values, and applies the function to each value in the list, accumulating a single result as it goes.
+
+![Reduce func](reduceFunc.png)
+
+
+```
+import functools from the standard library
+import functools
+
+def add(sum_so_far, x):
+    print(f"sum_so_far: {sum_so_far}, x: {x}")
+    return sum_so_far + x
+
+numbers = [1, 2, 3, 4]
+sum = functools.reduce(add, numbers)
+//sum_so_far: 1, x: 2
+//sum_so_far: 3, x: 3
+//sum_so_far: 6, x: 4
+//10 doesn't print, it's just the final result
+print(sum)
+//10
+```
+
+Notice that we are passing the function add without the ().
+
+It means that reduce will take care of the execution and pass the parameters for you.
+
+Think of passing add like handing someone a recipe (the instructions), instead
+of the finished dish (the result of the execution).
+
+
+Assignment
+Complete the join and the join_first_sentences functions.
+
+Complete the join function. It's a helper function we'll use in join_first_sentences.
+It takes two inputs:
+A doc_so_far accumulator string - similar to the sum_so_far variable in the example above.
+A sentence string - this is the next string we want to add to the accumulator.
+Returns the result of concatenating the "doc" and "sentence" strings together, with a period and a space in between. For example:
+```
+doc = "This is the first sentence"
+sentence = "This is the second sentence"
+print(join(doc, sentence))
+//This is the first sentence. This is the second sentence
+```
+Complete the join_first_sentences function.
+It accepts two arguments:
+A list of sentence strings
+An integer n
+If n is zero, just return an empty string.
+Use functools.reduce() with your join function to combine the sliced sentences into a single string, adding a final period without a trailing space.
+Use list slicing to get the first n sentences.
+
+Here's an example of the expected behavior:
+```
+joined = join_first_sentences(
+    ["This is the first sentence", "This is the second sentence", "This is the third sentence"],
+    2
+)
+print(joined)
+//This is the first sentence. This is the second sentence.
+```
+
+## Map, Filter, and Reduce Review
+
+Higher-order functions like map, filter, and reduce, allow us to avoid stateful iteration and mutations of variables.
+
+Take a look at this imperative code that calculates the factorial of a number:
+```
+def factorial(n):
+    # a procedure that continuously multiplies
+    # the current result by the next number
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+```
+Here's the same factorial function using reduce:
+```
+import functools
+
+def factorial(n):
+    return functools.reduce(lambda x, y: x * y, range(1, n + 1))
+```
+In the functional example, we're just combining functions to get the result we want. There's no need to reassign variables or keep track of the program's state in a loop.
+
+A loop is inherently stateful. Depending on which iteration you're on, the i variable has a different value.
+
+
+## Zip
+
+The zip function takes two iterables (in this case lists), and returns a new iterable where each element is a tuple containing one element from each of the original iterables.
+```
+a = [1, 2, 3]
+b = [4, 5, 6]
+
+c = list(zip(a, b))
+print(c)
+# [(1, 4), (2, 5), (3, 6)]
+```
+Assignment
+Complete the pair_document_with_format function. It takes two lists of strings as input:
+
+doc_names: the names of documents
+doc_formats: the file formats of the documents
+zip up the lists into a single list of tuples with the names as the first index and the formats as the second index in each tuple.
+filter the list of tuples to only include tuples where the format is one of the given valid_formats.
+Return the result as a list.
